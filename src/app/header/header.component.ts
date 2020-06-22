@@ -34,4 +34,8 @@ this.datastorageservice.savedata();
     fetchdata(){
         this.datastorageservice.fetchdata().subscribe();
     }
+
+    onlogout(){
+        this.auth.onlogout();
+    }
 }

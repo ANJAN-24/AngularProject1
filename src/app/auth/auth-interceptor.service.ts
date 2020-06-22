@@ -7,7 +7,11 @@ import { take, exhaustMap } from 'rxjs/operators';
 export class AuthInterceptorService implements HttpInterceptor{
     constructor (private auth:authservice){}
     intercept(req :HttpRequest<any>, next:HttpHandler){
-        this.auth.user.pipe(take(1),exhaustMap(user => {
+       return this.auth.user.pipe(take(1),exhaustMap(user => {
+           if(!user)
+           {
+               return next.handle(req);
+           }
             const modifiedreq = req.clone(
                 {
                     params:new HttpParams().set('auth',user.id)
